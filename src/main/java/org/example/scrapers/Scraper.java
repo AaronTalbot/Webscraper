@@ -4,4 +4,6 @@ public interface Scraper {
 
     void scrapeCategory(String categoryUrl);
     void scrapeProduct(String productUrl);
+
+    void getAllMensProducts();
 }

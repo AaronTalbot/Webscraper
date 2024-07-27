@@ -8,10 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 public abstract class BaseScraper implements Scraper {
@@ -19,11 +19,24 @@ public abstract class BaseScraper implements Scraper {
     protected ExecutorService executor;
 
     public BaseScraper() {
+        initialiazeDriver();
+    }
+
+    public void initialiazeDriver(){
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\aaron\\Development\\Webscraper\\src\\main\\java\\org\\example\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
 
-        // Initialize ChromeDriver
+        // Set a common user agent string
+        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+
+        // Set additional headers if needed
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("profile.managed_default_content_settings.images", 2); // Disable images
+        options.setExperimentalOption("prefs", prefs);
+
+        // Initialize ChromeDriver with options
         driver = new ChromeDriver(options);
+
     }
 
     protected Document getDocument(String url) {

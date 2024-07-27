@@ -16,25 +16,27 @@ public class Main {
 
 
             Scraper asosScraper = new AsosScraper(database);
-            Scraper debenhamsScraper = new DebenhamsScraper(database);
-
-            // URLs to scrape
-            String asosCategoryUrl = "https://www.asos.com/men/new-in/cat/?cid=27110";
-            String debenhamsCategoryURL = "https://www.debenhams.com/categories/mens-trousers";
-
-
-
-//             Execute in parallel
-            Arrays.asList(asosScraper, debenhamsScraper).parallelStream().forEach(scraper -> {
-                scraper.scrapeCategory(asosCategoryUrl);
-                scraper.scrapeCategory(debenhamsCategoryURL);
-                ((BaseScraper) debenhamsScraper).shutdown();
-                ((BaseScraper) asosScraper).shutdown();
-            });
+//            Scraper debenhamsScraper = new DebenhamsScraper(database);
+//            debenhamsScraper.getAllMensProducts();
+//            asosScraper.getAllMensProducts();
+//
+//            // URLs to scrape
+            asosScraper.getAllMensProducts();
+//            String debenhamsCategoryURL = "https://www.debenhams.com/categories/mens-trousers";
+//
+//
+//
+////             Execute in parallel
+//            Arrays.asList(asosScraper, debenhamsScraper).parallelStream().forEach(scraper -> {
+//                asosScraper.scrapeCategory(asosCategoryUrl);
+//                scraper.scrapeCategory(debenhamsCategoryURL);
+//                ((BaseScraper) debenhamsScraper).shutdown();
+//                ((BaseScraper) asosScraper).shutdown();
+//            });
 
             // Shutdown scrapers
             ((BaseScraper) asosScraper).shutdown();
-            ((BaseScraper) debenhamsScraper).shutdown();
+//            ((BaseScraper) debenhamsScraper).shutdown();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
